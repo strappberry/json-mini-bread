@@ -1,0 +1,30 @@
+{
+    "name": "json-mini-bread-hook",
+    "description": "Creates a mini BREAD nested inside another model.",
+    "require": {
+        "larapack/hooks": "^1.0.5",
+        "tcg/voyager": "^1.1.11"
+    },
+    "version": "0.0.1",
+    "autoload": {
+        "psr-4": {
+            "JsonMiniBreadHook\\": "src/"
+        }
+    },
+    "extra": {
+        "hook": {
+            "providers": [
+                "JsonMiniBreadHook\\JsonMiniBreadHookServiceProvider"
+            ],
+            "aliases": {
+                "JsonMiniBreadHook": "JsonMiniBreadHook\\Facades\\JsonMiniBreadHookFacade"
+            },
+            "views": [
+                "resources/views"
+            ],
+            "lang": [
+                "resources/lang"
+            ]
+        }
+    }
+}
