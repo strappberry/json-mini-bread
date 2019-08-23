@@ -1,5 +1,5 @@
 {
-    "name": "strappberry/json-mini-bread-hook",
+    "name": "json-mini-bread-hook",
     "description": "Creates a mini BREAD nested inside another model.",
     "require": {
         "larapack/hooks": "^1.0.5",
