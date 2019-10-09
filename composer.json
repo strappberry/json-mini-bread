@@ -3,7 +3,7 @@
     "description": "Creates a mini BREAD nested inside another model.",
     "require": {
         "larapack/hooks": "^1.0.5",
-        "tcg/voyager": "^1.1.11"
+        "tcg/voyager": "^1.2.7"
     },
     "version": "0.0.1",
     "autoload": {

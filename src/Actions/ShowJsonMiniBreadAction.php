@@ -8,12 +8,20 @@ use TCG\Voyager\Actions\AbstractAction;
 
 class ShowJsonMiniBreadAction extends AbstractAction
 {
-    public function getTitle()
+    private $dataRow;
+
+    public function __construct($dataType, $data)
     {
+        parent::__construct($dataType, $data);
         $jsonMiniBreadFormField = new JsonMiniBreadFormField();
         $dataRowQuery = $this->dataType->rows()->where('type', $jsonMiniBreadFormField->getCodename());
-        if ($dataRowQuery->exists()) {
-            return $dataRowQuery->first()->display_name;
+        $this->dataRow = $dataRowQuery->first();
+    }
+
+    public function getTitle()
+    {
+        if ($this->dataRow) {
+            return $this->dataRow->display_name;
         }
         return __('json-mini-bread::generic.json_mini_bread_action');
     }
@@ -43,4 +51,10 @@ class ShowJsonMiniBreadAction extends AbstractAction
             $slugSingular => $this->data->id,
         ]);
     }
+
+    public function shouldActionDisplayOnDataType()
+    {
+        return $this->dataRow !== null;
+    }
+
 }
