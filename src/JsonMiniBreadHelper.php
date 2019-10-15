@@ -34,49 +34,50 @@ class JsonMiniBreadHelper
     {
         $allFields = $this->dataRow->details->fields ?? [];
         $allFields = json_decode(json_encode($allFields), true);
-        foreach ($allFields as &$field) {
+        $allFields = collect($allFields)->map(function ($field) {
             $fixedField = array_merge($this->fieldDefaults, $field);
             $field = $fixedField;
             $field['field'] = kebab_case($field['name']);
             $field['display_name'] = ucfirst($field['name']);
-            unset($field);
-        }
-        $allFields = json_decode(json_encode($allFields));
+            $field = new DataRow($field);
+
+            return $field;
+        });
         return $allFields;
     }
 
     private function filterAllFields($filter)
     {
         $allFields = $this->allFields();
-        $filteredFields = array_filter($allFields, function ($field) use ($filter) {
-            return str_contains($field->visibility, $filter);
+        $filteredFields = $allFields->filter(function ($field) use ($filter) {
+            return Str::contains($field->visibility, $filter);
         });
         return $filteredFields;
     }
 
     public function browseFields()
     {
-        return collect($this->filterAllFields("B"));
+        return $this->filterAllFields("B");
     }
 
     public function readFields()
     {
-        return collect($this->filterAllFields("R"));
+        return $this->filterAllFields("R");
     }
 
     public function editFields()
     {
-        return collect($this->filterAllFields("E"));
+        return $this->filterAllFields("E");
     }
 
     public function addFields()
     {
-        return collect($this->filterAllFields("A"));
+        return $this->filterAllFields("A");
     }
 
     public function deleteFields()
     {
-        return collect($this->filterAllFields("D"));
+        return $this->filterAllFields("D");
     }
 
     public function contextField()
